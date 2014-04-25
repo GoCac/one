@@ -11,7 +11,6 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.ab.view.sliding.AbSlidingTabView;
 
@@ -45,8 +44,8 @@ public class MySlideTabFragment extends Fragment {
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
 				// TODO Auto-generated method stub
-				Toast.makeText(MySlideTabFragment.this.getActivity(), "ok",
-						Toast.LENGTH_SHORT).show();
+				// Toast.makeText(MySlideTabFragment.this.getActivity(), "ok",
+				// Toast.LENGTH_SHORT).show();
 			}
 
 			@Override

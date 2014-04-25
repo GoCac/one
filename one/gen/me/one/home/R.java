@@ -77,13 +77,14 @@ public final class R {
         public static final int welcome=0x7f020029;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b0006;
-        public static final int bn_test2=0x7f0b0005;
-        public static final int btn_test=0x7f0b0004;
+        public static final int action_settings=0x7f0b0007;
+        public static final int bn_test2=0x7f0b0006;
+        public static final int btn_test=0x7f0b0005;
         public static final int content_frame=0x7f0b0000;
         public static final int imageView_open=0x7f0b0003;
         public static final int mAbSlidingTabView=0x7f0b0002;
         public static final int mapview=0x7f0b0001;
+        public static final int mapview_frag=0x7f0b0004;
     }
     public static final class layout {
         public static final int activity_my_home=0x7f030000;

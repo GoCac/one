@@ -1,8 +1,11 @@
 package me.app.global;
 
+import com.tencent.tencentmap.mapsdk.map.MapView;
+
 import android.app.Application;
 
 public class MyApplication extends Application {
+	public MapView mMapView = null;
 
 	@Override
 	public void onCreate() {
