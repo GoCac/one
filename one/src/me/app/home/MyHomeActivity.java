@@ -72,6 +72,7 @@ public class MyHomeActivity extends FragmentActivity implements OnClickListener 
 		public void onLocationUpdate(TencentMapLBSApiResult locRes) {
 			// TODO Auto-generated method stub
 			mLocRes = locRes;
+			mApplication.mLocation = resultToString(locRes);
 			updateMapView();
 		}
 
@@ -94,15 +95,15 @@ public class MyHomeActivity extends FragmentActivity implements OnClickListener 
 		overridePendingTransition(R.anim.anim_into, R.anim.anim_back);
 		this.mApplication = (MyApplication) this.getApplication();
 		this.myOverlay = new MyOverlay();
-		this.myItemOverlay = new MyItemizedOverlay(this);
+		this.myItemOverlay = new MyItemizedOverlay(this.getApplicationContext());
 		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		mWakeLock = powerManager.newWakeLock(
 				PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "hzjLBS");
 		this.mListener = new LocListener(TencentMapLBSApi.GEO_TYPE_GCJ02,
-				TencentMapLBSApi.LEVEL_GEO, 0);
+				TencentMapLBSApi.LEVEL_ADMIN_AREA, 0);
 		int req = TencentMapLBSApi.getInstance().requestLocationUpdate(
 				MyHomeActivity.this.getApplicationContext(), mListener);
-		TencentMapLBSApi.getInstance().setGPSUpdateInterval(3000);
+		TencentMapLBSApi.getInstance().setGPSUpdateInterval(10000);
 		MySlideTabFragment mySlideTabFragment = new MySlideTabFragment();
 		getSupportFragmentManager().beginTransaction()
 				.add(R.id.content_frame, mySlideTabFragment).commit();
@@ -147,7 +148,7 @@ public class MyHomeActivity extends FragmentActivity implements OnClickListener 
 		// TODO Auto-generated method stub
 		super.onPause();
 		this.mWakeLock.release();
-		TencentMapLBSApi.getInstance().removeLocationUpdate();
+		// TencentMapLBSApi.getInstance().removeLocationUpdate();
 	}
 
 	@Override
@@ -163,18 +164,29 @@ public class MyHomeActivity extends FragmentActivity implements OnClickListener 
 		switch (view.getId()) {
 		case R.id.btn_test:
 			if (null != mLocRes) {
-				Toast.makeText(
-						getApplicationContext(),
-						"lat:" + mLocRes.Latitude + " Lng:" + mLocRes.Longitude,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(),
+						resultToString(mLocRes), Toast.LENGTH_SHORT).show();
 			}
 			break;
 		}
 	}
 
+	private String resultToString(TencentMapLBSApiResult result) {
+		if (result != null) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(result.Province).append(result.City)
+					.append(result.District).append(result.Town)
+					.append(result.Village).append(result.Street)
+					.append(result.StreetNo);
+			return sb.toString();
+		}
+		return null;
+	}
+
 	public void updateMapView() {
 		// TODO Auto-generated method stub
 		if (null != mApplication.mMapView && null != mLocRes) {
+			mApplication.mMapView.clearAllOverlays();
 			mApplication.mMapView.getController().setCenter(
 					new GeoPoint((int) (this.mLocRes.Latitude * 1E6),
 							(int) (this.mLocRes.Longitude * 1E6)));
