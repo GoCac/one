@@ -83,7 +83,7 @@ public class MyHomeActivity extends FragmentActivity implements OnClickListener 
 		}
 
 	}
-
+//获取位置结果
 	public TencentMapLBSApiResult getmLocRes() {
 		return mLocRes;
 	}
