@@ -25,8 +25,6 @@ import com.tencent.tencentmap.lbssdk.TencentMapLBSApi;
 import com.tencent.tencentmap.lbssdk.TencentMapLBSApiListener;
 import com.tencent.tencentmap.lbssdk.TencentMapLBSApiResult;
 import com.tencent.tencentmap.mapsdk.map.GeoPoint;
-import com.tencent.tencentmap.mapsdk.search.GeocoderSearch;
-import com.tencent.tencentmap.mapsdk.search.ReGeocoderResult;
 
 public class MyHomeActivity extends FragmentActivity implements OnClickListener {
 	private static final boolean D = Constant.DEBUG;
@@ -74,7 +72,6 @@ public class MyHomeActivity extends FragmentActivity implements OnClickListener 
 		public void onLocationUpdate(TencentMapLBSApiResult locRes) {
 			// TODO Auto-generated method stub
 			mLocRes = locRes;
-			mApplication.mLocation = resultToString(locRes);
 			updateMapView();
 		}
 
@@ -201,9 +198,8 @@ public class MyHomeActivity extends FragmentActivity implements OnClickListener 
 		}
 		return sb.toString();
 	}
-	
 
-	public void updateMapView() {
+	private void updateMapView() {
 		// TODO Auto-generated method stub
 		if (null != mApplication.mMapView && null != mLocRes) {
 			mApplication.mMapView.clearAllOverlays();

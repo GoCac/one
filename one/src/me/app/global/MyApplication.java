@@ -6,7 +6,6 @@ import android.app.Application;
 
 public class MyApplication extends Application {
 	public MapView mMapView = null;
-	public String mLocation = null;
 
 	@Override
 	public void onCreate() {
