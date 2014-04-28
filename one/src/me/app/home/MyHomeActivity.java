@@ -25,6 +25,8 @@ import com.tencent.tencentmap.lbssdk.TencentMapLBSApi;
 import com.tencent.tencentmap.lbssdk.TencentMapLBSApiListener;
 import com.tencent.tencentmap.lbssdk.TencentMapLBSApiResult;
 import com.tencent.tencentmap.mapsdk.map.GeoPoint;
+import com.tencent.tencentmap.mapsdk.search.GeocoderSearch;
+import com.tencent.tencentmap.mapsdk.search.ReGeocoderResult;
 
 public class MyHomeActivity extends FragmentActivity implements OnClickListener {
 	private static final boolean D = Constant.DEBUG;
@@ -83,7 +85,8 @@ public class MyHomeActivity extends FragmentActivity implements OnClickListener 
 		}
 
 	}
-//获取位置结果
+
+	// 获取位置结果
 	public TencentMapLBSApiResult getmLocRes() {
 		return mLocRes;
 	}
@@ -171,17 +174,34 @@ public class MyHomeActivity extends FragmentActivity implements OnClickListener 
 		}
 	}
 
-	private String resultToString(TencentMapLBSApiResult result) {
+	public static String resultToString(TencentMapLBSApiResult result) {
+		StringBuilder sb = new StringBuilder();
 		if (result != null) {
-			StringBuilder sb = new StringBuilder();
-			sb.append(result.Province).append(result.City)
-					.append(result.District).append(result.Town)
-					.append(result.Village).append(result.Street)
-					.append(result.StreetNo);
-			return sb.toString();
+			if (!result.Province.equals("Unknow")) {
+				sb.append(result.Province);
+			}
+			if (!result.City.equals("Unknow")) {
+				sb.append(result.City);
+			}
+			if (!result.District.equals("Unknow")) {
+				sb.append(result.District);
+			}
+			if (!result.Town.equals("Unknow")) {
+				sb.append(result.Town);
+			}
+			if (!result.Village.equals("UnKnow")) {
+				sb.append(result.Village);
+			}
+			if (!result.Street.equals("Unkonw")) {
+				sb.append(result.Street);
+			}
+			if (!result.StreetNo.equals("Unknow")) {
+				sb.append(result.StreetNo);
+			}
 		}
-		return null;
+		return sb.toString();
 	}
+	
 
 	public void updateMapView() {
 		// TODO Auto-generated method stub

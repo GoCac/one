@@ -10,8 +10,9 @@ import android.widget.Toast;
 import com.tencent.tencentmap.lbssdk.TencentMapLBSApiResult;
 import com.tencent.tencentmap.mapsdk.map.GeoPoint;
 import com.tencent.tencentmap.mapsdk.map.ItemizedOverlay;
-import com.tencent.tencentmap.mapsdk.map.MapView;
 import com.tencent.tencentmap.mapsdk.map.OverlayItem;
+import com.tencent.tencentmap.mapsdk.search.GeocoderSearch;
+import com.tencent.tencentmap.mapsdk.search.ReGeocoderResult;
 
 public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
@@ -23,6 +24,19 @@ public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		super(mContext);
 		this.mApplication = (MyApplication) mContext;
 		this.overlayItems = new ArrayList<OverlayItem>();
+		this.setOnFocusChangeListener(new com.tencent.tencentmap.mapsdk.map.ItemizedOverlay.OnFocusChangeListener() {
+
+			@Override
+			public void onFocusChanged(ItemizedOverlay<?> oldlay,
+					OverlayItem newlay) {
+				// TODO Auto-generated method stub
+				if (newlay != null) {
+					Toast.makeText(mApplication, newlay.getSnippet(),
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+
+		});
 		// TODO Auto-generated constructor stub
 	}
 
@@ -36,7 +50,7 @@ public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		for (TencentMapLBSApiResult res : mLbsRes) {
 			overlayItems.add(new OverlayItem(new GeoPoint(
 					(int) (res.Latitude * 1E6), (int) (res.Longitude * 1E6)),
-					"p", "我在这里"));
+					"p", MyHomeActivity.resultToString(res)));
 		}
 		populate();
 	}
@@ -50,12 +64,15 @@ public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		return overlayItems.get(pos);
 	}
 
-	@Override
-	public boolean onTap(GeoPoint p, MapView mapView) {
-		// TODO Auto-generated method stub
-		Toast.makeText(mApplication, mApplication.mLocation, Toast.LENGTH_SHORT)
-				.show();
-		return super.onTap(p, mapView);
+	public ReGeocoderResult searchFromGeo(GeoPoint geoPoint) {
+		GeocoderSearch geocoderSearch = new GeocoderSearch(this.mApplication);
+		try {
+			return geocoderSearch.searchFromLocation(geoPoint);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
