@@ -50,7 +50,7 @@ public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		for (TencentMapLBSApiResult res : mLbsRes) {
 			overlayItems.add(new OverlayItem(new GeoPoint(
 					(int) (res.Latitude * 1E6), (int) (res.Longitude * 1E6)),
-					"p", MyHomeActivity.resultToString(res)));
+					"p", "您的位置:" + MyHomeActivity.resultToString(res)));
 		}
 		populate();
 	}

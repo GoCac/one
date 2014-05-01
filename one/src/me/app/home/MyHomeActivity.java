@@ -174,25 +174,25 @@ public class MyHomeActivity extends FragmentActivity implements OnClickListener 
 	public static String resultToString(TencentMapLBSApiResult result) {
 		StringBuilder sb = new StringBuilder();
 		if (result != null) {
-			if (!result.Province.equals("Unknow")) {
+			if (result.Province != null && !result.Province.equals("Unknow")) {
 				sb.append(result.Province);
 			}
-			if (!result.City.equals("Unknow")) {
+			if (result.City != null && !result.City.equals("Unknow")) {
 				sb.append(result.City);
 			}
-			if (!result.District.equals("Unknow")) {
+			if (result.District != null && !result.District.equals("Unknow")) {
 				sb.append(result.District);
 			}
-			if (!result.Town.equals("Unknow")) {
+			if (result.Town != null && !result.Town.equals("Unknow")) {
 				sb.append(result.Town);
 			}
-			if (!result.Village.equals("UnKnow")) {
+			if (result.Village != null && !result.Village.equals("UnKnow")) {
 				sb.append(result.Village);
 			}
-			if (!result.Street.equals("Unkonw")) {
+			if (result.Street != null && !result.Street.equals("Unkonw")) {
 				sb.append(result.Street);
 			}
-			if (!result.StreetNo.equals("Unknow")) {
+			if (result.StreetNo != null && !result.StreetNo.equals("Unknow")) {
 				sb.append(result.StreetNo);
 			}
 		}
