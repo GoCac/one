@@ -3,9 +3,8 @@ package me.app.home;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.app.global.MyApplication;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.widget.Toast;
 
 import com.tencent.tencentmap.lbssdk.TencentMapLBSApiResult;
 import com.tencent.tencentmap.mapsdk.map.GeoPoint;
@@ -18,11 +17,11 @@ public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
 	private List<OverlayItem> overlayItems = null;
 	private List<TencentMapLBSApiResult> mLbsRes = null;
-	private MyApplication mApplication = null;
+	private Context context = null;
 
-	public MyItemizedOverlay(Context mContext) {
+	public MyItemizedOverlay(final Context mContext) {
 		super(mContext);
-		this.mApplication = (MyApplication) mContext;
+		this.context = mContext;
 		this.overlayItems = new ArrayList<OverlayItem>();
 		this.setOnFocusChangeListener(new com.tencent.tencentmap.mapsdk.map.ItemizedOverlay.OnFocusChangeListener() {
 
@@ -31,8 +30,12 @@ public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 					OverlayItem newlay) {
 				// TODO Auto-generated method stub
 				if (newlay != null) {
-					Toast.makeText(mApplication, newlay.getSnippet(),
-							Toast.LENGTH_SHORT).show();
+					// Toast.makeText(mContext, newlay.getSnippet(),
+					// Toast.LENGTH_SHORT).show();
+					new AlertDialog.Builder(mContext).setIcon(null)
+							.setTitle("位置信息").setMessage(newlay.getSnippet())
+							.setCancelable(true).setPositiveButton("知道啦", null)
+							.show();
 				}
 			}
 
@@ -65,7 +68,7 @@ public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	}
 
 	public ReGeocoderResult searchFromGeo(GeoPoint geoPoint) {
-		GeocoderSearch geocoderSearch = new GeocoderSearch(this.mApplication);
+		GeocoderSearch geocoderSearch = new GeocoderSearch(this.context);
 		try {
 			return geocoderSearch.searchFromLocation(geoPoint);
 		} catch (Exception e) {

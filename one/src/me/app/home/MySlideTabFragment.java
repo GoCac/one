@@ -23,7 +23,7 @@ public class MySlideTabFragment extends Fragment {
 				.findViewById(R.id.mAbSlidingTabView);
 		MapFragment shopFrag1 = new MapFragment();
 		DetailFragment shopFrag2 = new DetailFragment();
-		DetailFragment shopFrag3 = new DetailFragment();
+		MoreFragment shopFrag3 = new MoreFragment();
 		List<Fragment> mFragments = new ArrayList<Fragment>();
 		mFragments.add(shopFrag1);
 		mFragments.add(shopFrag2);

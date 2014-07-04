@@ -77,23 +77,30 @@ public final class R {
         public static final int welcome=0x7f020029;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b0007;
-        public static final int bn_test2=0x7f0b0006;
-        public static final int btn_test=0x7f0b0005;
+        public static final int action_settings=0x7f0b000c;
+        public static final int bn_test2=0x7f0b000b;
+        public static final int btn_open_blue=0x7f0b0006;
+        public static final int btn_search_blue=0x7f0b0007;
+        public static final int btn_send=0x7f0b0009;
+        public static final int btn_test=0x7f0b000a;
         public static final int content_frame=0x7f0b0000;
+        public static final int et_message=0x7f0b0008;
         public static final int imageView_open=0x7f0b0003;
         public static final int mAbSlidingTabView=0x7f0b0002;
         public static final int mapview=0x7f0b0001;
-        public static final int mapview_frag=0x7f0b0004;
+        public static final int mapview_frag=0x7f0b0005;
+        public static final int tv_name=0x7f0b0004;
     }
     public static final class layout {
         public static final int activity_my_home=0x7f030000;
         public static final int activity_my_map=0x7f030001;
         public static final int activity_tab_fragment=0x7f030002;
         public static final int activity_welcome=0x7f030003;
-        public static final int first_fragment=0x7f030004;
-        public static final int home_listview=0x7f030005;
-        public static final int second_fragment=0x7f030006;
+        public static final int bluelist=0x7f030004;
+        public static final int first_fragment=0x7f030005;
+        public static final int home_listview=0x7f030006;
+        public static final int more=0x7f030007;
+        public static final int second_fragment=0x7f030008;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;

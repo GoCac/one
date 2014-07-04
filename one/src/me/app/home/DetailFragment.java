@@ -31,6 +31,8 @@ public class DetailFragment extends Fragment {
 		this.btn_test.setOnClickListener((View.OnClickListener) this
 				.getActivity());
 		this.btn_test2 = (Button) view.findViewById(R.id.bn_test2);
+		this.btn_test2.setOnClickListener((View.OnClickListener) this
+				.getActivity());
 	}
 
 }
