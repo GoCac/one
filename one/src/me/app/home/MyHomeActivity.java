@@ -1,11 +1,7 @@
 package me.app.home;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -72,6 +68,7 @@ public class MyHomeActivity extends FragmentActivity implements
 	private List<BluetoothInfo> blueInfos;
 	private Map<String, BluetoothInfo> blueInfoMap;
 	private LayoutInflater inflater;
+	private String[] mBlueNames;
 	private int mPos = 0;
 
 	private static final class MyHandler extends Handler {
@@ -105,37 +102,37 @@ public class MyHomeActivity extends FragmentActivity implements
 		}
 	};
 
-	public byte[] toByteArray(Object obj) {
-		byte[] bytes = null;
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		try {
-			ObjectOutputStream oos = new ObjectOutputStream(bos);
-			oos.writeObject(obj);
-			oos.flush();
-			bytes = bos.toByteArray();
-			oos.close();
-			bos.close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-		return bytes;
-	}
-
-	public Object toObject(byte[] bytes) {
-		Object obj = null;
-		try {
-			ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-			ObjectInputStream ois = new ObjectInputStream(bis);
-			obj = ois.readObject();
-			ois.close();
-			bis.close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		} catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
-		}
-		return obj;
-	}
+	// public byte[] toByteArray(Object obj) {
+	// byte[] bytes = null;
+	// ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	// try {
+	// ObjectOutputStream oos = new ObjectOutputStream(bos);
+	// oos.writeObject(obj);
+	// oos.flush();
+	// bytes = bos.toByteArray();
+	// oos.close();
+	// bos.close();
+	// } catch (IOException ex) {
+	// ex.printStackTrace();
+	// }
+	// return bytes;
+	// }
+	//
+	// public Object toObject(byte[] bytes) {
+	// Object obj = null;
+	// try {
+	// ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+	// ObjectInputStream ois = new ObjectInputStream(bis);
+	// obj = ois.readObject();
+	// ois.close();
+	// bis.close();
+	// } catch (IOException ex) {
+	// ex.printStackTrace();
+	// } catch (ClassNotFoundException ex) {
+	// ex.printStackTrace();
+	// }
+	// return obj;
+	// }
 
 	public class LocListener extends TencentMapLBSApiListener {
 
@@ -289,17 +286,14 @@ public class MyHomeActivity extends FragmentActivity implements
 							.show();
 				} else {
 					blueAdapter.startDiscovery();
-					// if (!deviceList.isEmpty()) {
-					// pool.execute(new ConnectThread(deviceList.get(0)));
-					// }
-					final String[] blueNames = mapToArray();
-					if (blueNames.length <= 0) {
+					mBlueNames = mapToArray();
+					if (mBlueNames == null || blueInfoMap.size() <= 0) {
 						Toast.makeText(MyHomeActivity.this, "暂时没有可用的蓝牙信号！",
 								Toast.LENGTH_SHORT).show();
 					} else {
 						new AlertDialog.Builder(MyHomeActivity.this)
 								.setTitle("周围蓝牙列表")
-								.setSingleChoiceItems(blueNames, 0,
+								.setSingleChoiceItems(mBlueNames, 0,
 										new DialogInterface.OnClickListener() {
 											@Override
 											public void onClick(
@@ -308,17 +302,31 @@ public class MyHomeActivity extends FragmentActivity implements
 												mPos = pos;
 											}
 										})
-								.setPositiveButton("确定",
+								.setNegativeButton("取消",
+										new DialogInterface.OnClickListener() {
+
+											@Override
+											public void onClick(
+													DialogInterface dialog,
+													int which) {
+												// TODO Auto-generated method
+												// stub
+												dialog.dismiss();
+											}
+										})
+								.setPositiveButton("连接",
 										new DialogInterface.OnClickListener() {
 
 											@Override
 											public void onClick(
 													DialogInterface dialog,
 													int pos) {
+												pool.execute(new ConnectThread(
+														deviceList.get(mPos)));
 												Toast.makeText(
 														MyHomeActivity.this,
-														"选择的："
-																+ blueNames[mPos],
+														"连接到蓝牙："
+																+ mBlueNames[mPos],
 														Toast.LENGTH_SHORT)
 														.show();
 												mPos = 0;
@@ -352,7 +360,7 @@ public class MyHomeActivity extends FragmentActivity implements
 			try {
 				tmp = blueAdapter
 						.listenUsingRfcommWithServiceRecord(
-								"",
+								"me",
 								UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
 			} catch (IOException e) {
 				e.printStackTrace();
